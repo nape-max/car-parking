@@ -7,9 +7,9 @@ use yii\rest\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
-use app\models\Client;
+use app\models\Car;
 
-class ClientController extends Controller
+class CarController extends Controller
 {
     public function behaviors()
     {
@@ -17,21 +17,21 @@ class ClientController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'test' => ['get'],
-                ]
+                    //'test' => ['get],
+                ],
             ]
         ];
     }
 
     public function actionAdd() {
-    
+        return 'add';
     }
 
     public function actionEdit($id) {
-    
+        return $id;
     }
 
     public function actionDelete($id) {
-
+        return $id;
     }
 }

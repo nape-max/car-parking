@@ -50,17 +50,17 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
-        */
     ],
     'params' => $params,
-    'defaultRoute' => '',
+    'defaultRoute' => 'client/add',
 ];
 
 if (YII_ENV_DEV) {
