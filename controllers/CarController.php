@@ -23,6 +23,11 @@ class CarController extends Controller
         ];
     }
 
+    public function actionGetAll()
+    {
+        return Car::getAll();
+    }
+
     public function actionAdd() {
         return 'add';
     }
