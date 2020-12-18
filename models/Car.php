@@ -63,6 +63,16 @@ class Car extends Database
         ];
     }
 
+    public function getOldAttributes()
+    {
+        return $this->old_attributes;
+    }
+
+    public function setOldAttributes($attributes)
+    {
+        $this->old_attributes = $attributes;
+    }
+
     public static function getTableName()
     {
         return 'car';

@@ -8,6 +8,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 
 use app\models\Car;
+use app\models\Client;
 
 class CarController extends Controller
 {
@@ -23,20 +24,84 @@ class CarController extends Controller
         ];
     }
 
+    public function actionGetOne($id)
+    {
+        $output = [];
+
+        try {
+            $car = Car::databaseGetOne($id);
+
+            $output['result'] = $car;
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
+    }
+
     public function actionGetAll()
     {
-        return Car::getAll();
+        $output = [];
+
+        try {
+            $cars = Car::databaseGetAll();
+
+            $output['result'] = $cars;
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
     }
 
     public function actionAdd() {
-        return 'add';
+        $output = [];
+
+        try {
+
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
     }
 
     public function actionEdit($id) {
-        return $id;
+        $output = [];
+
+        try {
+
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
     }
 
     public function actionDelete($id) {
-        return $id;
+        $output = [];
+
+        try {
+
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
     }
 }

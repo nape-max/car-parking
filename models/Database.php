@@ -33,6 +33,31 @@ class Database extends Model
         return false;
     }
 
+    public static function databaseGetOne($id)
+    {
+        if (!is_null(static::getTableName())) {
+            $oneEntryDatabase = (new Query())
+                ->select("*")
+                ->from(static::getTableName())
+                ->where('id = :id', [':id' => $id])
+                ->one();
+
+            $newObject = new static();
+
+            if (is_array($oneEntryDatabase)) {
+                foreach(array_keys($oneEntryDatabase) as $key) {
+                    $newObject[$key] = $oneEntryDatabase[$key];
+                }
+
+                $newObject->setOldAttributes($newObject->attributes);
+
+                return $newObject;
+            }
+        }
+
+        return false;
+    }
+
     public static function databaseGetAll()
     {
         if (!is_null(static::getTableName())) {
@@ -46,7 +71,7 @@ class Database extends Model
             foreach($allEntriesDatabase as $entry) {
                 $newObject = new static();  
                 
-                foreach ($newObject->attributes as $key=>$value) {
+                foreach (array_keys($entry) as $key) {
                     $newObject[$key] = $entry[$key];
                 }
 
