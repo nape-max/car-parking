@@ -90,4 +90,48 @@ class Database extends Model
             return false;
         }
     }
+
+    public static function databaseFind($field, $sign, $value)
+    {
+        $classFields = static::getFieldsList();
+
+        if (
+            is_string($field) && in_array($field, $classFields, true) &&
+            is_string($sign) && (strlen($sign) == 1)
+            ) {
+            $query = (new Query())
+                ->select("*")
+                ->from(static::getTableName())
+                ->where($field . $sign . ":value", [
+                    ':value' => $value,
+                ])
+                ->all();
+
+            return $query;
+        }
+
+        return false;
+    }
+
+    public static function databaseFindOne($field, $sign, $value)
+    {
+        $classFields = static::getFieldsList();
+
+        if (
+            is_string($field) && in_array($field, $classFields, true) &&
+            is_string($sign) && (strlen($sign) == 1)
+            ) {
+            $query = (new Query())
+                ->select("*")
+                ->from(static::getTableName())
+                ->where($field . $sign . ":value", [
+                    ':value' => $value,
+                ])
+                ->one();
+
+            return $query;
+        }
+
+        return false;
+    }
 }

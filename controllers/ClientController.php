@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use yii\db\Query;
 
 use app\models\Client;
+use app\models\Car;
 
 class ClientController extends Controller
 {
@@ -26,6 +27,24 @@ class ClientController extends Controller
 
     public function actionGetAll() {
         return Client::databaseGetAll();
+    }
+
+    public function actionFind() {
+        $car = new Car();
+        $car->id = 1;
+        $car->brand = 'BMW';
+        $car->model = 'X5';
+        $car->color = 'Black';
+        $car->license_plate_number = 'с065мк';
+        $car->is_on_parking = true;
+        $car->client_id = 1;
+
+        $car->validate();
+
+        echo print_r($car->errors, true);
+        exit();
+
+        return 1;
     }
 
     public function actionAdd() {

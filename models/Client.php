@@ -23,6 +23,16 @@ class Client extends Database
         ];
     }
 
+    public static function getFieldsList() {
+        return [
+            'id',
+            'full_name',
+            'gender',
+            'phone',
+            'address',
+        ];
+    }
+
     public function getOldAttributes()
     {
         return $this->old_attributes;
