@@ -29,7 +29,9 @@ class ClientController extends Controller
         $output = [];
 
         try {
+            $clients = Client::databaseGetAll();
 
+            $output['result'] = $clients;
         } catch (Exception $e) {
             $error = $e->getMessage();
 

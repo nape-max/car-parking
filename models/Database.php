@@ -79,6 +79,8 @@ class Database extends Model
 
                 $objects[] = $newObject;
             }
+
+            return $objects;
         } else {
             return false;
         }
