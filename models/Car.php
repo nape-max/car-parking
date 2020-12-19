@@ -18,6 +18,7 @@ class Car extends Database
     public function rules() {
         return [
             [['brand', 'model', 'color', 'license_plate_number', 'is_on_parking', 'client_id'], 'required'],
+            [['license_plate_number'], 'unique'],
         ];
     }
 

@@ -19,7 +19,7 @@ class Client extends Database
             [['full_name', 'gender', 'phone'], 'required'],
             [['full_name'], 'string', 'min' => 3],
             [['gender'], 'string', 'length' => 1],
-            [['phone'], 'string', 'min' => 12],
+            [['phone'], 'string', 'min' => 12, 'max' => 20],
         ];
     }
 

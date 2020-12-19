@@ -25,7 +25,24 @@ class ClientController extends Controller
         ];
     }
 
-    public function actionGetAll() {
+    public function actionInfo($id) {
+        $output = [];
+
+        try {
+            $client = Client::databaseGetOne($id);
+
+            $output['result'] = $client;
+        } catch (exception $e) {
+            $error = $e->getMessage();
+
+            $output['result'] = false;
+            $output['error'] = $error;
+        }
+
+        return $output;
+    }
+
+    public function actionInfoAll() {
         $output = [];
 
         try {
@@ -43,11 +60,21 @@ class ClientController extends Controller
         //return Client::databaseGetAll();
     }
 
-    public function actionFind() {
+    public function actionFindAll() {
         $output = [];
+        $field = Yii::$app->request->get('field');
+        $sign = Yii::$app->request->get('sign');
+        $value = Yii::$app->request->get('value');
 
         try {
+            if (!empty($field) && !empty($sign) && !empty($value)) {
+                $clients = Client::databaseFindAll($field, $sign, $value);
 
+                $output['result'] = $clients;
+            } else {
+                $output['result'] = false;
+                $output['error'] = "'field', 'sign', 'value' get parameters must be specified.";
+            }
         } catch (exception $e) {
             $error = $e->getMessage();
 
@@ -56,29 +83,20 @@ class ClientController extends Controller
         }
 
         return $output;
-
-        // $car = new Car();
-        // $car->id = 1;
-        // $car->brand = 'BMW';
-        // $car->model = 'X5';
-        // $car->color = 'Black';
-        // $car->license_plate_number = 'с065мк';
-        // $car->is_on_parking = true;
-        // $car->client_id = 1;
-
-        // $car->validate();
-
-        // echo print_r($car->errors, true);
-        // exit();
-
-        // return 1;
     }
 
     public function actionAdd() {
         $output = [];
+        $data = Yii::$app->request->post();
+        $newClient = new Client();
 
         try {
-
+            if ($newClient->load($data, '') && $newClient->databaseSave()) {
+                $output['result'] = $newClient;
+            } else {
+                $output['result'] = false;
+                $output['error'] = $newClient->errors;
+            }
         } catch (Exception $e) {
             $error = $e->getMessage();
 
@@ -87,30 +105,26 @@ class ClientController extends Controller
         }
 
         return $output;
-
-        // $client = new Client();
-
-        // $client->id = 2;
-        // $client->full_name = "John Patrick";
-        // $client->gender = "M";
-        // $client->phone = "+71111111111";
-
-        // return $client->databaseUpdate();
-
-        // $query = (new Query())
-        //     ->select('')
-        //     ->from('client')
-        //     ->where('full_name=:full_name', [':full_name' => $full_name])
-        //     ->createCommand()
-        //     ->getRawSql();
-
-        //return $query;
     }
 
     public function actionEdit($id) {
         $output = [];
+        $data = Yii::$app->request->post();
 
         try {
+            $client = Client::databaseGetOne($id);
+
+            if (!empty($client)) {
+                if ($client->load($data, '') && $client->databaseUpdate()) {
+                    $output['result'] = $client;
+                } else {
+                    $output['result'] = false;
+                    $output['error'] = $client->errors;
+                }
+            } else {
+                $output['result'] = false;
+                $output['error'] = 'Cannot find entry with that id.';
+            }
 
         } catch (Exception $e) {
             $error = $e->getMessage();
@@ -126,7 +140,18 @@ class ClientController extends Controller
         $output = [];
 
         try {
+            $client = Client::databaseGetOne($id);
 
+            if (!empty($client)) {
+                if ($client->databaseDelete()) {
+                    $output['result'] = true;
+                } else {
+                    $output['result'] = false;
+                }
+            } else {
+                $output['result'] = false;
+                $output['error'] = 'Cannot find entry with that id.';
+            }
         } catch (Exception $e) {
             $error = $e->getMessage();
 

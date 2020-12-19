@@ -86,17 +86,29 @@ class Database extends Model
         }
     }
 
-    public function databaseInsert()
+    public function databaseSave()
     {
         $attributes = $this->attributes;
 
         if ($this->validate()) {
-            $query = Yii::$app->db
-                ->createCommand()
-                ->insert(static::getTableName(), $attributes)
-                ->execute();
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $query = Yii::$app->db
+                    ->createCommand()
+                    ->insert(static::getTableName(), $attributes)
+                    ->execute();
 
-            return $query;
+                if ($query) {
+                    $this->id = Yii::$app->db->getLastInsertID();
+                    $transaction->commit();
+                    return $query;
+                } else {
+                    $transaction->rollback();
+                }
+            } catch (Exception $e) {
+                $transaction->rollback();
+                return false;
+            }
         } else {
             return false;
         }
@@ -118,20 +130,32 @@ class Database extends Model
         }
     }
 
-    public static function databaseFind($field, $sign, $value)
+    public function databaseDelete()
+    {
+        $query = Yii::$app->db
+            ->createCommand()
+            ->delete(static::getTableName(), 'id=' . $this->id)
+            ->execute();
+
+        return $query;
+    }
+
+    public static function databaseFindAll($field, $sign, $value)
     {
         $classFields = static::getFieldsList();
 
         if (
             is_string($field) && in_array($field, $classFields, true) &&
-            is_string($sign) && (strlen($sign) == 1)
+            is_string($sign) && (strlen($sign) == 1 &&
+            preg_match("/['=','>','<','>=','<=']/", $sign))
             ) {
             $query = (new Query())
                 ->select("*")
                 ->from(static::getTableName())
-                ->where($field . $sign . ":value", [
-                    ':value' => $value,
-                ])
+                ->where(
+                    $field . $sign . ":value", [
+                        ':value' => $value,
+                    ])
                 ->all();
 
             return $query;
