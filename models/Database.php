@@ -15,14 +15,20 @@ use yii\db\Query;
 class Database extends Model
 {
     const SCENARIO_DEFAULT = 'default';
-    const SCENARIO_INSERT = 'insert';
+    const SCENARIO_BASIC_FIELDS = 'basic_fields';
+
+    public function getCustomScenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => $this->attributes(),
+            self::SCENARIO_BASIC_FIELDS => $this->attributes(),
+        ];
+    }
 
     public function scenarios()
     {
-        return [
-            self::SCENARIO_DEFAULT => $this->attributes,
-            self::SCENARIO_INSERT => $this->attributes,
-        ];
+        $scenarios = $this->getCustomScenarios();
+        return $scenarios;
     }
 
     /**
@@ -80,13 +86,15 @@ class Database extends Model
                 ->one();
 
             $newObject = new static();
+            $newObject->scenario = self::SCENARIO_BASIC_FIELDS;
 
             if (is_array($oneEntryDatabase)) {
-                foreach(array_keys($oneEntryDatabase) as $key) {
+                foreach($newObject->activeAttributes() as $key) {
                     $newObject[$key] = $oneEntryDatabase[$key];
                 }
 
                 $newObject->setOldAttributes($newObject->attributes);
+                $newObject->scenario = self::SCENARIO_DEFAULT;
 
                 return $newObject;
             }
@@ -112,13 +120,15 @@ class Database extends Model
             $objects = [];
 
             foreach($allEntriesDatabase as $entry) {
-                $newObject = new static();  
+                $newObject = new static();
+                $newObject->scenario = self::SCENARIO_BASIC_FIELDS;
                 
-                foreach (array_keys($entry) as $key) {
+                foreach ($newObject->activeAttributes() as $key) {
                     $newObject[$key] = $entry[$key];
                 }
 
                 $newObject->setOldAttributes($newObject->attributes);
+                $newObject->scenario = self::SCENARIO_DEFAULT;
 
                 $objects[] = $newObject;
             }
@@ -137,7 +147,7 @@ class Database extends Model
     public function databaseSave()
     {
         if ($this->validate()) {
-            $this->scenario = self::SCENARIO_INSERT;
+            $this->scenario = self::SCENARIO_BASIC_FIELDS;
             $attributes = $this->getAttributes($this->activeAttributes());
             $this->scenario = self::SCENARIO_DEFAULT;
             

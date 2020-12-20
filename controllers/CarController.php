@@ -97,6 +97,10 @@ class CarController extends Controller
             if ($newCar->load($data, '') && $newCar->databaseSave()) {
                 $output['result'] = $newCar;
             } else {
+                if (empty($data)) {
+                    $newCar->validate();
+                }
+                
                 $output['result'] = false;
                 $output['error'] = $newCar->errors;
             }

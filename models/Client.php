@@ -3,8 +3,6 @@ namespace app\models;
 
 class Client extends Database
 {
-    const table_name = 'client';
-
     public $id;
     public $full_name;
     public $gender;
@@ -17,6 +15,7 @@ class Client extends Database
     {
         return [
             [['full_name', 'gender', 'phone'], 'required'],
+            [['address'], 'safe'],
             [['full_name'], 'string', 'min' => 3],
             [['gender'], 'string', 'length' => 1],
             [['phone'], 'string', 'min' => 12, 'max' => 20],

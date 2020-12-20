@@ -99,6 +99,10 @@ class ClientController extends Controller
             if ($newClient->load($data, '') && $newClient->databaseSave()) {
                 $output['result'] = $newClient;
             } else {
+                if (empty($data)) {
+                    $newClient->validate();
+                }
+
                 $output['result'] = false;
                 $output['error'] = $newClient->errors;
             }

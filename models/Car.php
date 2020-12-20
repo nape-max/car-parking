@@ -26,7 +26,7 @@ class Car extends Database
         ];
     }
 
-    public function scenarios()
+    public function getCustomScenarios()
     {
         return [
             self::SCENARIO_DEFAULT => [
@@ -39,7 +39,7 @@ class Car extends Database
                 'client_id',
                 'client'
             ],
-            self::SCENARIO_INSERT => [
+            self::SCENARIO_BASIC_FIELDS => [
                 'id',
                 'brand',
                 'model',
