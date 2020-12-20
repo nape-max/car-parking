@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="httpRequest('http://localhost/client/find')">Click Me!</button>
+    <script>
+        function httpRequest(theUrl)
+        {
+            var xmlHttp = new XMLHttpRequest();
+
+            var body = JSON.stringify([['1','2','3'], ['3','2','1']]);
+
+            console.log(theUrl + '?' + body);
+
+            xmlHttp.open( "GET", theUrl + '?array=' + body, false ); // false for synchronous request
+            xmlHttp.setRequestHeader("Content-Type", "application/json");
+            xmlHttp.send(body);
+            console.log(xmlHttp.responseText);
+        }
+    </script>
+</body>
+</html>

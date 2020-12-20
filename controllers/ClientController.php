@@ -19,7 +19,12 @@ class ClientController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'test' => ['get'],
+                    'info'     => ['get'],
+                    'info-all' => ['get'],
+                    'find-all' => ['get'],
+                    'add'      => ['post'],
+                    'edit'     => ['post'],
+                    'delete'   => ['post']
                 ]
             ]
         ];

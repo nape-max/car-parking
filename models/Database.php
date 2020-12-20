@@ -6,13 +6,32 @@ use Yii;
 use yii\base\Model;
 use yii\db\Query;
 
+/**
+ * Database_Class это класс для работы с базой данных.
+ * 
+ * Database_Class был создан с целью объединения логики работы
+ * с базой данных для всех классов в одном классе.
+ */
 class Database extends Model
 {
+
+    /**
+     * Получение имени таблицы (переопределяется в наследниках),
+     * используется во всех методах класса Database с помощью
+     * позднего связывания static()::
+     * 
+     * @return null | string
+     */
     public static function getTableName()
     {
         return null;
     }
-
+    
+    /**
+     * Проверяет была ли изменена модель на основе поля oldAttributes
+     * 
+     * @return bool
+     */
     public function isChanged()
     {
         $isChanged = false;
@@ -33,6 +52,14 @@ class Database extends Model
         return false;
     }
 
+    /**
+     * Находит по ID и возвращает одну запись из базы данных,
+     * использует static::getTableName()
+     * 
+     * @param int $id
+     * 
+     * @return static::Object
+     */
     public static function databaseGetOne($id)
     {
         if (!is_null(static::getTableName())) {
@@ -58,6 +85,12 @@ class Database extends Model
         return false;
     }
 
+    /**
+     * Находит все записи таблицы в базе данных,
+     * использует static::getTableName()
+     * 
+     * @return array static::Object
+     */
     public static function databaseGetAll()
     {
         if (!is_null(static::getTableName())) {
@@ -86,6 +119,11 @@ class Database extends Model
         }
     }
 
+    /**
+     * Сохраняет новую модель в базу данных
+     * 
+     * @return bool
+     */
     public function databaseSave()
     {
         $attributes = $this->attributes;
@@ -114,6 +152,11 @@ class Database extends Model
         }
     }
 
+    /**
+     * Обновляет запись в базе данных на основе модели и её ID
+     * 
+     * @return bool
+     */
     public function databaseUpdate()
     {
         $attributes = $this->attributes;
@@ -130,6 +173,11 @@ class Database extends Model
         }
     }
 
+    /**
+     * Удаляет запись из базы данных на основе модели и её ID
+     * 
+     * @return bool
+     */
     public function databaseDelete()
     {
         $query = Yii::$app->db
@@ -140,6 +188,16 @@ class Database extends Model
         return $query;
     }
 
+    /**
+     * Находит все записи в таблице базы данных, удовлетворяющие условию
+     * использует static::getTableName()
+     * 
+     * @param string     $field Поле в таблице
+     * @param string     $sign  Знак сравнения (>, <, >=, <=, =)
+     * @param string|int $value Значение
+     * 
+     * @return bool
+     */
     public static function databaseFindAll($field, $sign, $value)
     {
         $classFields = static::getFieldsList();
@@ -164,6 +222,16 @@ class Database extends Model
         return false;
     }
 
+    /**
+     * Находит одну запись в таблице базы данных, удовлетворяющую условию
+     * использует static::getTableName()
+     * 
+     * @param string     $field Поле в таблице
+     * @param string     $sign  Знак сравнения (>, <, >=, <=, =)
+     * @param string|int $value Значение
+     * 
+     * @return bool
+     */
     public static function databaseFindOne($field, $sign, $value)
     {
         $classFields = static::getFieldsList();
