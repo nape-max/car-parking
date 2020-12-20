@@ -14,6 +14,16 @@ use yii\db\Query;
  */
 class Database extends Model
 {
+    const SCENARIO_DEFAULT = 'default';
+    const SCENARIO_INSERT = 'insert';
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => $this->attributes,
+            self::SCENARIO_INSERT => $this->attributes,
+        ];
+    }
 
     /**
      * Получение имени таблицы (переопределяется в наследниках),
@@ -126,9 +136,11 @@ class Database extends Model
      */
     public function databaseSave()
     {
-        $attributes = $this->attributes;
-
         if ($this->validate()) {
+            $this->scenario = self::SCENARIO_INSERT;
+            $attributes = $this->getAttributes($this->activeAttributes());
+            $this->scenario = self::SCENARIO_DEFAULT;
+            
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $query = Yii::$app->db

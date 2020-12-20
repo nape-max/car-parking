@@ -5,6 +5,9 @@ use yii\base\Model;
 
 class Car extends Database
 {
+    const SCENARIO_DEFAULT = 'default';
+    const SCENARIO_INSERT = 'insert';
+
     public $id;
     public $brand;
     public $model;
@@ -17,8 +20,34 @@ class Car extends Database
     
     public function rules() {
         return [
+            [['is_on_parking'], 'boolean'],
+            ['is_on_parking', 'default', 'value' => true],
             [['brand', 'model', 'color', 'license_plate_number', 'is_on_parking', 'client_id'], 'required'],
-            [['license_plate_number'], 'unique'],
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => [
+                'id',
+                'brand',
+                'model',
+                'color',
+                'license_plate_number',
+                'is_on_parking',
+                'client_id',
+                'client'
+            ],
+            self::SCENARIO_INSERT => [
+                'id',
+                'brand',
+                'model',
+                'color',
+                'license_plate_number',
+                'is_on_parking',
+                'client_id',
+            ],
         ];
     }
 
@@ -40,15 +69,15 @@ class Car extends Database
     {
         $isParentValidate = parent::validate();
 
-        if (!empty($this->client) && $isParentValidate) {
-            return true;
-        } else {
-            if (!empty($this->client_id)) {
-                $this->addError('client_id', 'Client must be exist.');
-            }
+        if (empty($this->client)) {
+            $this->addError('client_id', 'Client must be exist.');
         }
 
-        return false;
+        if (empty($this->errors)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function getFieldsList()
