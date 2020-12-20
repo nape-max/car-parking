@@ -70,7 +70,7 @@ class CarController extends Controller
         $value = Yii::$app->request->get('value');
 
         try {
-            if (!empty($field) && !empty($sign) && !empty($value)) {
+            if (!empty($field) && !empty($sign) && ((!empty($value) || ($value === '0') || ($value === '1')))) {
                 $cars = Car::databaseFindAll($field, $sign, $value);
 
                 $output['result'] = $cars;

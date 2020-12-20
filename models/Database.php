@@ -85,10 +85,10 @@ class Database extends Model
                 ->where('id = :id', [':id' => $id])
                 ->one();
 
-            $newObject = new static();
-            $newObject->scenario = self::SCENARIO_BASIC_FIELDS;
-
             if (is_array($oneEntryDatabase)) {
+                $newObject = new static();
+                $newObject->scenario = self::SCENARIO_BASIC_FIELDS;
+
                 foreach($newObject->activeAttributes() as $key) {
                     $newObject[$key] = $oneEntryDatabase[$key];
                 }
@@ -98,9 +98,13 @@ class Database extends Model
 
                 return $newObject;
             }
+
+            return null;
+        } else {
+            return false;
         }
 
-        return false;
+        
     }
 
     /**
@@ -181,7 +185,9 @@ class Database extends Model
      */
     public function databaseUpdate()
     {
-        $attributes = $this->attributes;
+        $this->scenario = self::SCENARIO_BASIC_FIELDS;
+        $attributes = $this->getAttributes($this->activeAttributes());
+        $this->scenario = self::SCENARIO_DEFAULT;
 
         if ($this->validate() && $this->isChanged()) {
             $query = Yii::$app->db
@@ -229,7 +235,7 @@ class Database extends Model
             is_string($sign) && (strlen($sign) == 1 &&
             preg_match("/['=','>','<','>=','<=']/", $sign))
             ) {
-            $query = (new Query())
+            $entries = (new Query())
                 ->select("*")
                 ->from(static::getTableName())
                 ->where(
@@ -238,10 +244,27 @@ class Database extends Model
                     ])
                 ->all();
 
-            return $query;
+            if (is_array($entries)) {
+                $objects = [];
+
+                foreach ($entries as $entry) {
+                    $newObject = new static();
+                    $newObject->scenario = self::SCENARIO_BASIC_FIELDS;
+
+                    foreach ($newObject->activeAttributes() as $key) {
+                        $newObject[$key] = $entry[$key];
+                    }
+
+                    $newObject->scenario = self::SCENARIO_DEFAULT;
+
+                    $objects[] = $newObject;
+                }
+            }
+
+            return $objects;
         }
 
-        return false;
+        return [];
     }
 
     /**

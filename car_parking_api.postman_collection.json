@@ -1,0 +1,985 @@
+{
+	"info": {
+		"_postman_id": "14e6dda6-4a99-4b02-948e-bd670d0fcac6",
+		"name": "car_parking_api",
+		"description": "Это коллекция для \"Car Parking\" API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "client",
+			"item": [
+				{
+					"name": "/client/add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/client/add",
+							"path": [
+								"client",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost/client/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"client",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": {\r\n        \"full_name\": [\r\n            \"Full Name cannot be blank.\"\r\n        ],\r\n        \"gender\": [\r\n            \"Gender cannot be blank.\"\r\n        ],\r\n        \"phone\": [\r\n            \"Phone cannot be blank.\"\r\n        ]\r\n    }\r\n}"
+						},
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "full_name",
+											"value": "Jackie John Markov",
+											"type": "text"
+										},
+										{
+											"key": "gender",
+											"value": "M",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+71111111111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/client/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"client",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"13\",\r\n        \"full_name\": \"Jackie John Markov\",\r\n        \"gender\": \"M\",\r\n        \"phone\": \"+71111111111\",\r\n        \"address\": null\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/client/info/$id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/client/info/$id",
+							"path": [
+								"client",
+								"info",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/client/info/5",
+									"path": [
+										"client",
+										"info",
+										"5"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"5\",\r\n        \"full_name\": \"Jackie Chan\",\r\n        \"gender\": \"M\",\r\n        \"phone\": \"+71111111111\",\r\n        \"address\": null\r\n    }\r\n}"
+						},
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/client/info/25",
+									"path": [
+										"client",
+										"info",
+										"25"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/client/info-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/client/info-all",
+							"path": [
+								"client",
+								"info-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Empty DB",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/client/info-all",
+									"path": [
+										"client",
+										"info-all"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": []\r\n}"
+						},
+						{
+							"name": "DB with entries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/client/info-all",
+									"path": [
+										"client",
+										"info-all"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": [\r\n        {\r\n            \"id\": \"3\",\r\n            \"full_name\": \"John Patrick\",\r\n            \"gender\": \"\",\r\n            \"phone\": \"\",\r\n            \"address\": null\r\n        },\r\n        {\r\n            \"id\": \"4\",\r\n            \"full_name\": \"John Patrick\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        },\r\n        {\r\n            \"id\": \"5\",\r\n            \"full_name\": \"Jackie Chan\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        },\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/client/find-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/client/find-all",
+							"path": [
+								"client",
+								"find-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/client/find-all?field=phone&sign==&value=%2B79173374448",
+									"path": [
+										"client",
+										"find-all"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "phone"
+										},
+										{
+											"key": "sign",
+											"value": "="
+										},
+										{
+											"key": "value",
+											"value": "%2B79173374448"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": [\r\n        {\r\n            \"id\": \"14\",\r\n            \"full_name\": \"Jackie John Markov\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        },\r\n        {\r\n            \"id\": \"15\",\r\n            \"full_name\": \"Jackie John Markov\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        },\r\n    ]\r\n}"
+						},
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost/client/find-all?field=phone&sign==&value=%2B7111111",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"client",
+										"find-all"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "phone"
+										},
+										{
+											"key": "sign",
+											"value": "="
+										},
+										{
+											"key": "value",
+											"value": "%2B7111111"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/client/edit/$id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/client/edit/$id",
+							"path": [
+								"client",
+								"edit",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/client/edit/15",
+									"path": [
+										"client",
+										"edit",
+										"15"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": \"Cannot find entry with that id.\"\r\n}"
+						},
+						{
+							"name": "All fields",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "full_name",
+											"value": "Jackie Joe Bye",
+											"type": "text"
+										},
+										{
+											"key": "gender",
+											"value": "M",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+79173374448",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Volgograd, Bye st., d.2, kv. 111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "/client/edit/$id",
+									"path": [
+										"client",
+										"edit",
+										"$id"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"14\",\r\n        \"full_name\": \"Jackie Joe Bye\",\r\n        \"gender\": \"M\",\r\n        \"phone\": \"+79173374448\",\r\n        \"address\": \"Volgograd, Bye st., d.2, kv. 111\"\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/client/delete/$id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/client/delete/$id",
+							"path": [
+								"client",
+								"delete",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/client/delete/35",
+									"path": [
+										"client",
+										"delete",
+										"35"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": \"Cannot find entry with that id.\"\r\n}"
+						},
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/client/delete/14",
+									"path": [
+										"client",
+										"delete",
+										"14"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": true\r\n}"
+						}
+					]
+				}
+			],
+			"description": "Содержит запросы к Action'ам для работы с моделью 'Client'.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "car",
+			"item": [
+				{
+					"name": "/car/add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/car/add",
+							"path": [
+								"car",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "model",
+											"value": "X5",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "BMW",
+											"type": "text"
+										},
+										{
+											"key": "color",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "license_plate_number",
+											"value": "у645ва",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "15",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "/car/add",
+									"path": [
+										"car",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"3\",\r\n        \"brand\": \"BMW\",\r\n        \"model\": \"X5\",\r\n        \"color\": \"Black\",\r\n        \"license_plate_number\": \"у645ва\",\r\n        \"is_on_parking\": true,\r\n        \"client_id\": \"15\",\r\n        \"client\": {\r\n            \"id\": \"15\",\r\n            \"full_name\": \"Jackie John Markov\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        }\r\n    }\r\n}"
+						},
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/add",
+									"path": [
+										"car",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": {\r\n        \"brand\": [\r\n            \"Brand cannot be blank.\"\r\n        ],\r\n        \"model\": [\r\n            \"Model cannot be blank.\"\r\n        ],\r\n        \"color\": [\r\n            \"Color cannot be blank.\"\r\n        ],\r\n        \"license_plate_number\": [\r\n            \"License Plate Number cannot be blank.\"\r\n        ],\r\n        \"client_id\": [\r\n            \"Client Id cannot be blank.\",\r\n            \"Client must be exist.\"\r\n        ]\r\n    }\r\n}"
+						},
+						{
+							"name": "Not unique License plate number",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "model",
+											"value": "BMW",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "X5",
+											"type": "text"
+										},
+										{
+											"key": "color",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "license_plate_number",
+											"value": "у645ва",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "15",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "/client/add",
+									"path": [
+										"client",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": {\r\n        \"license_plate_number\": [\r\n            \"License plate number already used.\"\r\n        ]\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/car/info/$id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/car/info/$id",
+							"path": [
+								"car",
+								"info",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/info/25",
+									"path": [
+										"car",
+										"info",
+										"25"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": null\r\n}"
+						},
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/info/1",
+									"path": [
+										"car",
+										"info",
+										"1"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"3\",\r\n        \"brand\": \"BMW\",\r\n        \"model\": \"X5\",\r\n        \"color\": \"Black\",\r\n        \"license_plate_number\": \"у645ва\",\r\n        \"is_on_parking\": \"1\",\r\n        \"client_id\": \"15\",\r\n        \"client\": {\r\n            \"id\": \"15\",\r\n            \"full_name\": \"Jackie John Markov\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        }\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/car/info-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/car/info-all",
+							"path": [
+								"car",
+								"info-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Empty DB",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/info-all",
+									"path": [
+										"car",
+										"info-all"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": []\r\n}"
+						},
+						{
+							"name": "DB with entries",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/info-all",
+									"path": [
+										"car",
+										"info-all"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"result\": [\r\n        {\r\n            \"id\": \"3\",\r\n            \"brand\": \"BMW\",\r\n            \"model\": \"X5\",\r\n            \"color\": \"Black\",\r\n            \"license_plate_number\": \"у645ва\",\r\n            \"is_on_parking\": \"1\",\r\n            \"client_id\": \"15\",\r\n            \"client\": {\r\n                \"id\": \"15\",\r\n                \"full_name\": \"Jackie John Markov\",\r\n                \"gender\": \"M\",\r\n                \"phone\": \"+71111111111\",\r\n                \"address\": null\r\n            }\r\n        },\r\n        {\r\n            \"id\": \"4\",\r\n            \"brand\": \"BMW\",\r\n            \"model\": \"X6\",\r\n            \"color\": \"White\",\r\n            \"license_plate_number\": \"у305ва\",\r\n            \"is_on_parking\": \"1\",\r\n            \"client_id\": \"15\",\r\n            \"client\": {\r\n                \"id\": \"15\",\r\n                \"full_name\": \"Jackie John Markov\",\r\n                \"gender\": \"M\",\r\n                \"phone\": \"+71111111111\",\r\n                \"address\": null\r\n            }\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/car/find-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/car/find-all",
+							"path": [
+								"car",
+								"find-all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Is on parking",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/find-all?field=is_on_parking&sign==&value=1",
+									"path": [
+										"car",
+										"find-all"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "is_on_parking"
+										},
+										{
+											"key": "sign",
+											"value": "="
+										},
+										{
+											"key": "value",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": [\r\n        {\r\n            \"id\": \"3\",\r\n            \"brand\": \"BMW\",\r\n            \"model\": \"X5\",\r\n            \"color\": \"Black\",\r\n            \"license_plate_number\": \"у645оо\",\r\n            \"is_on_parking\": \"1\",\r\n            \"client_id\": \"15\",\r\n            \"client\": {\r\n                \"id\": \"15\",\r\n                \"full_name\": \"Jackie John Markov\",\r\n                \"gender\": \"M\",\r\n                \"phone\": \"+71111111111\",\r\n                \"address\": null\r\n            }\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/find-all",
+									"path": [
+										"car",
+										"find-all"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "license_plate_number",
+											"disabled": true
+										},
+										{
+											"key": "sign",
+											"value": "=",
+											"disabled": true
+										},
+										{
+											"key": "value",
+											"value": "%2B7111111",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": \"'field', 'sign', 'value' get parameters must be specified.\"\r\n}"
+						},
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "/car/find-all?field=license_plate_number&sign==&value=у645ва",
+									"path": [
+										"car",
+										"find-all"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "license_plate_number"
+										},
+										{
+											"key": "sign",
+											"value": "="
+										},
+										{
+											"key": "value",
+											"value": "у645ва"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": [\r\n        {\r\n            \"id\": \"3\",\r\n            \"brand\": \"BMW\",\r\n            \"model\": \"X5\",\r\n            \"color\": \"Black\",\r\n            \"license_plate_number\": \"у645ва\",\r\n            \"is_on_parking\": \"1\",\r\n            \"client_id\": \"15\",\r\n            \"client\": {\r\n                \"id\": \"15\",\r\n                \"full_name\": \"Jackie John Markov\",\r\n                \"gender\": \"M\",\r\n                \"phone\": \"+71111111111\",\r\n                \"address\": null\r\n            }\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/car/edit/$id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/car/edit/$id",
+							"path": [
+								"car",
+								"edit",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "All fields",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "model",
+											"value": "X5",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "BMW",
+											"type": "text"
+										},
+										{
+											"key": "color",
+											"value": "Black",
+											"type": "text"
+										},
+										{
+											"key": "license_plate_number",
+											"value": "у645ва",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "15",
+											"type": "text"
+										},
+										{
+											"key": "is_on_parking",
+											"value": "0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "/client/edit/$id",
+									"path": [
+										"client",
+										"edit",
+										"$id"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": {\r\n        \"id\": \"3\",\r\n        \"brand\": \"BMW\",\r\n        \"model\": \"X5\",\r\n        \"color\": \"Black\",\r\n        \"license_plate_number\": \"у645оо\",\r\n        \"is_on_parking\": \"0\",\r\n        \"client_id\": \"15\",\r\n        \"client\": {\r\n            \"id\": \"15\",\r\n            \"full_name\": \"Jackie John Markov\",\r\n            \"gender\": \"M\",\r\n            \"phone\": \"+71111111111\",\r\n            \"address\": null\r\n        }\r\n    }\r\n}"
+						},
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/car/edit/15",
+									"path": [
+										"car",
+										"edit",
+										"15"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": \"Cannot find entry with that id.\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "/car/delete/$id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/car/delete/$id",
+							"path": [
+								"car",
+								"delete",
+								"$id"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/client/delete/35",
+									"path": [
+										"client",
+										"delete",
+										"35"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": false,\r\n    \"error\": \"Cannot find entry with that id.\"\r\n}"
+						},
+						{
+							"name": "Valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/client/delete/14",
+									"path": [
+										"client",
+										"delete",
+										"14"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"result\": true\r\n}"
+						}
+					]
+				}
+			],
+			"description": "Содержит Action'ы для работы с моделью 'Car'.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

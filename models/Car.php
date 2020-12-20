@@ -73,6 +73,10 @@ class Car extends Database
             $this->addError('client_id', 'Client must be exist.');
         }
 
+        if (!empty(Car::databaseFindAll('license_plate_number', '=', $this->license_plate_number))) {
+            $this->addError('license_plate_number', 'License plate number already used.');
+        }
+
         if (empty($this->errors)) {
             return true;
         } else {
